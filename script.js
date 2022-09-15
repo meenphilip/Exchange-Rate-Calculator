@@ -8,7 +8,22 @@ const swap = document.getElementById("swap");
 
 // Fetch exchange rates and update the DOM
 function calculate() {
-  console.log("meen");
+  const currency_one = currencyEl_one.value;
+  const currency_two = currencyEl_two.value;
+  // console.log(currency_one, currency_two);
+
+  //fetch the data
+  fetch(`https://api.exchangerate-api.com/v4/latest/${currency_one}`)
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log(data);
+      const rate = data.rates[currency_two];
+      console.log(rate);
+
+      rateEl.innerText = `1 ${currency_one} = ${rate} ${currency_two}`;
+
+      amountEl_two.value = (amountEl_one.value * rate).toFixed(2);
+    });
 }
 
 // Event Listeners
